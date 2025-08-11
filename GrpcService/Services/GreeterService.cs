@@ -1,13 +1,12 @@
 using Grpc.Core;
 
-using System.Threading.Tasks;
-
 namespace GrpcServiceDemo.Services
 {
-    public class GreeterService : Greeter.GreeterBase
+    public class GreeterService : Greeter.GreeterBase // GreeterBase is a class that implements the server-side handling logic.
     {
         // Unary call
-        public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
+        public override Task<HelloReply> SayHello(HelloRequest request,
+                                                  ServerCallContext context)
         {
             return Task.FromResult(new HelloReply
             {
@@ -16,7 +15,9 @@ namespace GrpcServiceDemo.Services
         }
 
         // Server streaming call
-        public override async Task SayHelloStream(HelloRequest request, IServerStreamWriter<HelloReply> responseStream, ServerCallContext context)
+        public override async Task SayHelloStream(HelloRequest request,
+                                                  IServerStreamWriter<HelloReply> responseStream,
+                                                  ServerCallContext context)
         {
             for (int i = 1; i <= 5; i++)
             {
