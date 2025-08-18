@@ -5,10 +5,10 @@ namespace GrpcServiceDemo.Services
     public class GreeterService : Greeter.GreeterBase // GreeterBase is a class that implements the server-side handling logic.
     {
         // Unary call
-        public override Task<HelloReply> SayHello(HelloRequest request,
+        public override async Task<HelloReply> SayHello(HelloRequest request,
                                                   ServerCallContext context)
         {
-            return Task.FromResult(new HelloReply
+            return await Task.FromResult(new HelloReply
             {
                 Message = $"Hello, {request.Name}"
             });
