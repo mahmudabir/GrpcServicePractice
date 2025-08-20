@@ -8,7 +8,7 @@ var client = new Greeter.GreeterClient(channel);
 Console.WriteLine($"Application Stared At: {DateTime.Now}");
 Console.WriteLine();
 
-const int loopCount = 10_000_000;
+const int loopCount = 10_000;
 Console.WriteLine($"Loop count: {loopCount}");
 Console.WriteLine($"Loop Stared At: {DateTime.Now}");
 List<AsyncUnaryCall<HelloReply>> calls = new List<AsyncUnaryCall<HelloReply>>();
