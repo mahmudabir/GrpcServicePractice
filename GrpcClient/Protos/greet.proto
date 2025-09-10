@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "GrpcServiceDemo";
+option csharp_namespace = "GrpcServiceClient";
 
 package greet;
 
@@ -16,4 +16,5 @@ message HelloRequest {
 
 message HelloReply {
   string message = 1;
+  repeated string addresses = 2;
 }

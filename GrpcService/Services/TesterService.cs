@@ -2,26 +2,26 @@ using Grpc.Core;
 
 using GrpcService.Mappers;
 
-using GrpcServiceServer;
+using GrpcServiceServerTest;
 
 namespace GrpcService.Services
 {
-    public class GreeterService : Greeter.GreeterBase // GreeterBase is a class that implements the server-side handling logic.
+    public class TesterService : Tester.TesterBase // GreeterBase is a class that implements the server-side handling logic.
     {
         private readonly IHttpContextService _httpContextService;
 
-        public GreeterService(IHttpContextService httpContextService)
+        public TesterService(IHttpContextService httpContextService)
         {
             _httpContextService = httpContextService;
         }
 
         // Unary call
-        public override async Task<HelloReply> SayHello(HelloRequest request,
-                                                        ServerCallContext context)
+        public override async Task<TestReply> SayTest(TestRequest request,
+                                                      ServerCallContext context)
         {
-            var response = new HelloReply
+            var response = new TestReply
             {
-                Message = $"Hello, {request.Name}",
+                Message = $"Test, {request.Name}",
                 Addresses =
                 {
                     "Dhaka",
@@ -40,15 +40,15 @@ namespace GrpcService.Services
         }
 
         // Server streaming call
-        public override async Task SayHelloStream(HelloRequest request,
-                                                  IServerStreamWriter<HelloReply> responseStream,
-                                                  ServerCallContext context)
+        public override async Task SayTestStream(TestRequest request,
+                                                 IServerStreamWriter<TestReply> responseStream,
+                                                 ServerCallContext context)
         {
             for (int i = 1; i <= 5; i++)
             {
-                await responseStream.WriteAsync(new HelloReply
+                await responseStream.WriteAsync(new TestReply
                 {
-                    Message = $"Hello {request.Name}, message #{i}"
+                    Message = $"Test {request.Name}, message #{i}"
                 });
                 await Task.Delay(1000); // simulate delay
             }

@@ -1,9 +1,13 @@
 ﻿using Grpc.Core;
 using Grpc.Net.Client;
 
-using GrpcServiceDemo;
+using GrpcServiceClient;
 
-var channel = GrpcChannel.ForAddress("http://localhost:5001");
+var channel = GrpcChannel.ForAddress("http://localhost:5001", new GrpcChannelOptions
+{
+    MaxReceiveMessageSize = 20 * 1024 * 1024, // 20 MB
+    MaxSendMessageSize = 20 * 1024 * 1024 // 20 MB
+});
 var client = new Greeter.GreeterClient(channel);
 Console.WriteLine($"Application Stared At: {DateTime.Now}");
 Console.WriteLine();
