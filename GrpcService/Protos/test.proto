@@ -9,12 +9,12 @@ package test;
 
 // The service definition
 service Tester {
-  rpc SayTest (TestRequest) returns (TestReply){
+  rpc SayTest (TestRequest) returns (TestReply) {
     option (google.api.http) = {
       post: "/SayTest"
     };
   }
-  rpc SayTestStream (TestRequest) returns (stream TestReply){
+  rpc SayTestStream (TestRequest) returns (stream TestReply) {
     option (google.api.http) = {
       post: "/SayTestStream"
     };

@@ -16,7 +16,8 @@ service Greeter {
       post: "/SayHello"
     };
   }
-  rpc SayHelloStream (HelloRequest) returns (stream HelloReply){
+
+  rpc SayHelloStream (HelloRequest) returns (stream HelloReply) {
     option (google.api.http) = {
       post: "/SayHelloStream"
     };
