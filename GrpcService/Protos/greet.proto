@@ -13,22 +13,26 @@ package greet;
 service Greeter {
   rpc SayHello (HelloRequest) returns (HelloReply) {
     option (google.api.http) = {
-      post: "/SayHello"
+      post: "/SayHello",
+      body: "*"
     };
   }
 
   rpc SayHelloStream (HelloRequest) returns (stream HelloReply) {
     option (google.api.http) = {
-      post: "/SayHelloStream"
+      post: "/SayHelloStream",
+      body: "*"
     };
   }
 }
 
 message HelloRequest {
   string name = 1;
+  test.TestRequest testRequest = 2;
 }
 
 message HelloReply {
   string message = 1;
   repeated string addresses = 2;
+  test.TestRequest testRequest = 3;
 }

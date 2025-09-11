@@ -14,7 +14,8 @@ public static partial class HelloMapper
         return new HelloReplyDto
         {
             Message = model.Message,
-            Addresses = model.Addresses.ToList()
+            Addresses = model.Addresses,
+            TestRequest = model.TestRequest.ToDto()
         };
     }
 }
@@ -22,10 +23,12 @@ public static partial class HelloMapper
 public class HelloRequestDto
 {
     public string? Name { get; set => field = value?.ToUpperInvariant(); }
+    public TestRequestDto? TestRequest { get; set; }
 }
 
 public class HelloReplyDto
 {
     public string? Message { get; set => field = value?.ToUpperInvariant(); }
-    public List<string> Addresses { get; set; }
+    public IList<string> Addresses { get; set; }
+    public TestRequestDto? TestRequest { get; set; }
 }

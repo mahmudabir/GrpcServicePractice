@@ -26,15 +26,19 @@ namespace GrpcService.Services
                 {
                     "Dhaka",
                     "Sherpur"
-                }
+                },
+                TestRequest = request.TestRequest
             };
+
+            var requestDto = request.ToDto();
+            var responseDto = response.ToDto();
 
             var userAgent = _httpContextService.GetHeaderValue("User-Agent");
             Console.WriteLine("Current User-Agent: " + userAgent);
             Console.WriteLine("Current Request: " + request);
-            Console.WriteLine("Current Request Payload: " + request.ToDto().Name);
+            Console.WriteLine("Current Request Payload: " + requestDto.Name + "; "+ requestDto.TestRequest?.Name);
             Console.WriteLine("Current Response: " + response);
-            Console.WriteLine("Current Response Payload: " + response.ToDto().Message + "; " + string.Join(", ", response.ToDto().Addresses.Select(x => x)));
+            Console.WriteLine("Current Response Payload: " + responseDto.Message + "; " + string.Join(", ", responseDto.Addresses.Select(x => x)));
 
             return await Task.FromResult(response);
         }
