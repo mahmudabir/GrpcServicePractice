@@ -2,6 +2,9 @@ using GrpcService.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IHttpContextService, HttpContextService>();
+
 // Add gRPC service
 builder.Services.AddGrpc(options =>
        {
@@ -17,8 +20,6 @@ builder.Services.AddGrpcReflection();
 // https://learn.microsoft.com/en-us/aspnet/core/grpc/json-transcoding-openapi?view=aspnetcore-9.0
 builder.Services.AddGrpcSwagger(); // registers Swagger generation for gRPC endpoints
 builder.Services.AddSwaggerGen(); // adds the Swashbuckle generator
-builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<IHttpContextService, HttpContextService>();
 
 var app = builder.Build();
 
