@@ -5,19 +5,23 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <LangVersion>preview</LangVersion>
-<!--        <Protobuf_AdditionalImportDirs>$(MSBuildThisFileDirectory)Protos</Protobuf_AdditionalImportDirs>-->
+        <!--        <Protobuf_AdditionalImportDirs>$(MSBuildThisFileDirectory)Protos</Protobuf_AdditionalImportDirs>-->
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\greet.proto" GrpcServices="Server" AdditionalImportDirs="Protos" />
-        <Protobuf Include="Protos\test.proto" GrpcServices="Server" AdditionalImportDirs="Protos" />
+        <!--  Use this if you need only gRpc Service  -->
+        <!-- <Protobuf Include="Protos\**\*.proto" GrpcServices="Server" AdditionalImportDirs="Protos" /> -->
+
+        <!--  Use this if you need swagger UI & json Transcoding  -->
+        <Protobuf Include="Protos\greet.proto" GrpcServices="Server" AdditionalImportDirs="Protos"/>
+        <Protobuf Include="Protos\test.proto" GrpcServices="Server" AdditionalImportDirs="Protos"/>
     </ItemGroup>
 
 
     <ItemGroup>
-<!--        <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0"/>-->
+        <!--        <PackageReference Include="Google.Api.CommonProtos" Version="2.17.0"/>-->
         <PackageReference Include="Grpc.AspNetCore" Version="2.64.0"/>
-        <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.71.0" />
+        <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.71.0"/>
         <PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="9.0.9"/>
         <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.9.9"/>
         <PackageReference Include="Riok.Mapperly" Version="4.2.1"/>
