@@ -1,14 +1,52 @@
 ﻿using Grpc.Core;
+using Grpc.Core.Interceptors;
 using Grpc.Net.Client;
 
 using GrpcServiceClient;
 
+
+#region DI with GRPC Client Factory (Optional)
+
+//public class GrpcClientService : IGrpcClientService
+//{
+//    private readonly PreBookingService.PreBookingServiceClient _client;
+
+//    public GrpcClientService(PreBookingService.PreBookingServiceClient client)
+//    {
+//        _client = client;
+//    }
+
+//    public async Task<BrandedFareResponse> GetBrandedFare(PreBookingRequest request)
+//    {
+//        // API key is automatically added by the interceptor
+//        return await _client.BrandedFareAsync(request);
+//    }
+//}
+
+//// Program.cs
+//builder.Services.AddGrpcClient<Greeter.GreeterClient>(options =>
+//{
+//    options.Address = new Uri("https://localhost:7001");
+//})
+//.AddInterceptor(() => new ApiKeyClientInterceptor(
+//    builder.Configuration["ApiKeySettings:ApiKey"]!));
+
+//// Register your service
+//builder.Services.AddScoped<IGrpcClientService, GrpcClientService>();
+
+#endregion
+
+
+var apiKey = "SK-SupplierGateway-2024-Dev-Key-Change-In-Production";
 var channel = GrpcChannel.ForAddress("http://localhost:5001", new GrpcChannelOptions
 {
     MaxReceiveMessageSize = 20 * 1024 * 1024, // 20 MB
     MaxSendMessageSize = 20 * 1024 * 1024 // 20 MB
 });
-var client = new Greeter.GreeterClient(channel);
+var invoker = channel.Intercept(new ApiKeyClientInterceptor(apiKey));
+var client = new Greeter.GreeterClient(invoker);
+
+
 Console.WriteLine($"Application Stared At: {DateTime.Now}");
 Console.WriteLine();
 
@@ -21,7 +59,10 @@ for (int i = 0; i < loopCount; i++)
     AsyncUnaryCall<HelloReply> clientCall = client.SayHelloAsync(new HelloRequest
     {
         Name = "Abir"
-    });
+    }, new Metadata
+        {
+            { "X-API-KEY", "SK-SupplierGateway-2024-Dev-Key-Change-In-Production" }
+        });
     calls.Add(clientCall);
 }
 Console.WriteLine($"Loop Ended At: {DateTime.Now}");
